@@ -1,4 +1,4 @@
-use clap::{Arg, Command, ArgMatches};
+use clap::Parser;
 use error::ZebroError;
 use regex::Regex;
 use std::io::Write;
@@ -15,12 +15,12 @@ fn main() {
 }
 
 fn run() -> Result<(), ZebroError> {
-    let matches = get_matches();
+    let cli = Cli::parse();
 
-    let address = matches.get_one::<String>("address");
-    let ip = matches.get_one::<String>("ip");
-    let port = *matches.get_one::<&str>("port").unwrap_or(&DEFAULT_PORT);
-    let zpl_code = matches.get_one::<String>("zpl").ok_or(ZebroError::MissingZplCode)?;
+    let address = cli.address;
+    let ip = cli.ip;
+    let port = cli.port;
+    let zpl_code = cli.zpl;
 
     let full_address = match (address, ip) {
         (Some(address), _) => address.clone(),
@@ -31,7 +31,7 @@ fn run() -> Result<(), ZebroError> {
     validate_address(&full_address)?;
     validate_zpl_code(&zpl_code)?;
 
-    print_zpl(&full_address, zpl_code)?;
+    print_zpl(&full_address, &zpl_code)?;
 
     println!("ZPL code sent successfully!");
 
@@ -58,45 +58,6 @@ fn validate_zpl_code(code: &str) -> Result<(), ZebroError> {
     Ok(())
 }
 
-fn get_matches() -> ArgMatches {
-    Command::new("zebro")
-        .version("0.1.0")
-        .about("A CLI tool to send ZPL code to a printer")
-        .arg(
-            Arg::new("address")
-                .short('a')
-                .long("address")
-                .value_name("IP:PORT")
-                .help("Define the address of the printer (IP:PORT)")
-                .num_args(1),
-        )
-        .arg(
-            Arg::new("ip")
-                .short('i')
-                .long("ip")
-                .value_name("IP")
-                .help("Define the IP of the printer")
-                .num_args(1),
-        )
-        .arg(
-            Arg::new("port")
-                .short('p')
-                .long("port")
-                .value_name("PORT")
-                .help("Define the port of the printer (default: 9100)")
-                .num_args(1),
-        )
-        .arg(
-            Arg::new("zpl")
-                .short('z')
-                .long("zpl")
-                .value_name("ZPL_CODE")
-                .help("The ZPL code to send to the printer")
-                .num_args(1),
-        )
-        .get_matches()
-}
-
 pub fn print_zpl(
     address: &str,
     zpl_code: &str,
@@ -105,4 +66,17 @@ pub fn print_zpl(
     stream.write_all(zpl_code.as_bytes())?;
     stream.flush()?;
     Ok(())
+}
+
+#[derive(Parser, Debug)]
+#[command(name = "zebro", version = "0.1.0", about = "A CLI tool to send ZPL code to a printer")]
+struct Cli {
+    #[arg(short, long, value_name = "IP:PORT")]
+    address: Option<String>,
+    #[arg(short, long, value_name = "IP")]
+    ip: Option<String>,
+    #[arg(short, long, value_name = "PORT", default_value_t = String::from(DEFAULT_PORT))]
+    port: String,
+    #[arg(short, long, value_name = "ZPL_CODE")]
+    zpl: String,
 }
