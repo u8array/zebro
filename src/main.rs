@@ -40,11 +40,10 @@ fn run() -> Result<(), ZebroError> {
 
 fn validate_address(address: &str) -> Result<(), ZebroError> {
     let re = Regex::new(r"^\d{1,3}(\.\d{1,3}){3}:\d{1,5}$").unwrap();
-    if re.is_match(address) {
-        Ok(())
-    } else {
-        Err(ZebroError::InvalidAddress)
+    if let false = re.is_match(address) {
+        return Err(ZebroError::InvalidAddress);
     }
+    Ok(())
 }
 
 fn validate_zpl_code(code: &str) -> Result<(), ZebroError> {
