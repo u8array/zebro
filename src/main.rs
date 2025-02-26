@@ -10,7 +10,7 @@ mod error;
 
 fn main() {
     if let Err(e) = run() {
-        eprintln!("Fehler: {}", e);
+        eprintln!("{}", e);
     }
 }
 

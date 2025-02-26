@@ -7,7 +7,7 @@ Zebro is a simple CLI tool for sending ZPL code to a label printer.
 ### Windows
 
 todo
- 
+
 ### Linux
 
 Download the installation script and run it:
