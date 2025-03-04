@@ -2,7 +2,7 @@
 setlocal
 
 echo Downloading release.zip...
-powershell -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/u8array/zebro/main/release.zip' -OutFile 'release.zip'"
+powershell -Command "Invoke-WebRequest -Uri 'https://raw.githubusercontent.com/u8array/zebro/master/release.zip' -OutFile 'release.zip'"
 
 echo Extracting release.zip...
 powershell -Command "Expand-Archive -Path 'release.zip' -DestinationPath 'zebro'"
