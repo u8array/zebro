@@ -13,7 +13,7 @@ todo
 Download the installation script and run it:
 
 ```sh
-wget https://raw.githubusercontent.com/u8array/zebro/main/install.sh
+wget https://raw.githubusercontent.com/u8array/zebro/master/install.sh
 chmod +x install.sh
 ./install.sh
 ```
