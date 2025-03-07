@@ -23,6 +23,12 @@ chmod +x install.sh
 ./install.sh
 ```
 
+```sh
+curl -L -O https://raw.githubusercontent.com/u8array/zebro/master/install.sh
+chmod +x install.sh
+./install.sh
+```
+
 ## Usage
 
 Use the following command to send ZPL code to a printer:

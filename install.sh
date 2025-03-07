@@ -8,7 +8,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
   FILE="zebro-$VERSION-macOs.zip"
 fi
 
-wget "$REPO/releases/download/$VERSION/$FILE"
+if command -v wget &> /dev/null; then
+  wget "$REPO/releases/download/$VERSION/$FILE"
+else
+  curl -L -O "$REPO/releases/download/$VERSION/$FILE"
+fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
   unzip "$FILE"
