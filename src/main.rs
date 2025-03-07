@@ -17,10 +17,12 @@ fn main() {
 fn run() -> Result<(), ZebroError> {
     let cli = Cli::parse();
 
-    let address = cli.address;
-    let ip = cli.ip;
-    let port = cli.port;
-    let zpl_code = cli.zpl;
+    let Cli {
+        address,
+        ip,
+        port,
+        zpl,
+    } = cli;
 
     let full_address = match (address, ip) {
         (Some(address), _) => address.clone(),
@@ -29,9 +31,9 @@ fn run() -> Result<(), ZebroError> {
     };
 
     validate_address(&full_address)?;
-    validate_zpl_code(&zpl_code)?;
+    validate_zpl_code(&zpl)?;
 
-    print_zpl(&full_address, &zpl_code)?;
+    print_zpl(&full_address, &zpl)?;
 
     println!("ZPL code sent successfully!");
 
