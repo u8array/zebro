@@ -6,9 +6,14 @@ Zebro is a simple CLI tool for sending ZPL code to a label printer.
 
 ### Windows
 
-todo
+1. Download the `zebro-v0.1.0-windows.zip` file:
+   [zebro-v0.1.0-windows.zip](https://github.com/u8array/zebro/releases/download/v0.1.0/zebro-v0.1.0-windows.zip)
 
-### Linux
+2. Extract the ZIP file to a directory of your choice.
+
+3. Add the directory where `zebro.exe` is located to your PATH environment variable
+
+### Linux / MacOS
 
 Download the installation script and run it:
 
